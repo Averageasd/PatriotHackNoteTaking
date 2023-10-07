@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from customtkinter import *
-
+import boto3
+import openai
 
 class AudioPlayer(ctk.CTk):
     def __init__(self):

@@ -31,6 +31,7 @@ class TextFrame(ctk.CTkFrame):
         self.textBx.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
         self.textBx.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
 
+
 class ErrorWindow(ctk.CTkToplevel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,6 +40,7 @@ class ErrorWindow(ctk.CTkToplevel):
         self.label = ctk.CTkLabel(self, text="Please select a file or enter in text")
         self.label.grid(row=0, column=0)
         self.label.pack(padx=20, pady=20)
+
 
 class Uploader(ctk.CTk):
     def __init__(self):
@@ -49,7 +51,7 @@ class Uploader(ctk.CTk):
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
-        self.logo= ctk.CTkLabel(self, text="Chaos Theory", fg_color="green")
+        self.logo = ctk.CTkLabel(self, text="Chaos Theory", fg_color="green")
         self.logo.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
         self.after(1000, self.genMain)
 
@@ -72,15 +74,14 @@ class Uploader(ctk.CTk):
         self.txtFrame = TextFrame(self)
         self.txtFrame.grid(row=1, column=0, padx=0, pady=0, sticky="nsew")
 
-        
         self.filenameLbl = ctk.CTkLabel(master=self, textvariable=self.filename, text="default")
         self.filenameLbl.grid(row=2, column=0, padx=0, pady=0, sticky="ew")
-        
-        # self.submitBtn = ctk.CTkButton(master=self, text="Submit",command=self.submit)
-        # self.submitBtn.grid(row=3, column=0, padx=0, pady=0, sticky="nsew")
 
-        self.submit = ctk.CTkButton(master=self, text="Submit", command=self.submit)
-        self.submit.grid(row=2, column=0, padx=0, pady=0, sticky="nsew")
+        self.submitBtn = ctk.CTkButton(master=self, text="Submit", command=self.submit)
+        self.submitBtn.grid(row=3, column=0, padx=0, pady=0, sticky="nsew")
+
+        # self.submit = ctk.CTkButton(master=self, text="Submit", command=self.submit)
+        # self.submit.grid(row=2, column=0, padx=0, pady=0, sticky="nsew")
 
     def submit(self):
         # File Submission
@@ -90,13 +91,10 @@ class Uploader(ctk.CTk):
         upload.Upload().uploadFile(self.path.get())
         file.close()
         text_extract.TextExtract.extract(os.path.basename(self.path.get()))
-        content = open('Output.txt', 'r')
-        self.txtFrame.textBx.insert(ctk.END, content.read())
+        self.destroy()
+        reader = Reader()
+        reader.mainloop()
 
-    def upload(self):
-        input = filedialog.askopenfilename()
-        self.path.set(input)
-        print(input)
 
     def login(self):
         pass
@@ -111,22 +109,7 @@ class Uploader(ctk.CTk):
             print(input)
         else:
             print("File not chosen")
-    
-    def submit(self):
-        # File Submission
-        # Check upload then textbx
-        global valid
-        print("Submit Called")
-        try:
-            file = open(self.path.get(), "r")
-            #upload.Upload().uploadFile(self.path.get())
-            file.close()
-            valid = True
-            self.genLoading()
-        except:
-            print("Error Uploading File")
-            self.displayError()
-    
+
     def displayError(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
             self.toplevel_window = ErrorWindow(self)  # create window if its None or destroyed
@@ -146,8 +129,8 @@ class Uploader(ctk.CTk):
         self.loadingLbl = ctk.CTkLabel(self, text="Uploading...", fg_color="green")
         self.loadingLbl.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
         print("destroying")
-        self.after(1000,self.destroy)
-    
+        self.after(1000, self.destroy)
+
 
 class Reader(ctk.CTk):
     def __init__(self):
@@ -183,17 +166,11 @@ class Reader(ctk.CTk):
         self.drop.grid(row=0, column=4, padx=10, pady=10)
 
         self.textArea = ctk.CTkTextbox(master=self)
-        self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30 ,pady=30, sticky='nsew')
+        self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30, pady=30, sticky='nsew')
+        content = open('Output.txt', 'r')
+        self.textArea.insert(ctk.END, content.read())
 
 
 if __name__ == "__main__":
-    # app = App()
-    # app.mainloop()
-
-    # nextAPP = NextApp()
-    # nextAPP.mainloop()
     uploader = Uploader()
     uploader.mainloop()
-    if (valid):
-        reader = Reader()
-        reader.mainloop()
