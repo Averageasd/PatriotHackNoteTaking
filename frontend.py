@@ -3,6 +3,7 @@ import tkinter
 from tkinter import filedialog
 import tkinter.messagebox
 import customtkinter as ctk
+import upload
 
 # PDF
 # TEXT
@@ -46,7 +47,7 @@ class App(ctk.CTk):
         # File Submission
         print("Submit Called")
         file = open(self.path.get(), "r")
-        print(file.read())
+        upload.Upload().uploadFile(self.path.get())
         file.close()
 
     def upload(self):
