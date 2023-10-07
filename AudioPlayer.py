@@ -37,7 +37,7 @@ class AudioPlayer(ctk.CTk):
         self.drop.grid(row=0, column=4, padx=10, pady=10)
 
         self.textArea = ctk.CTkTextbox(master=self)
-        self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, sticky='nsew')
+        self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30 ,pady=30, sticky='nsew')
 
 
 if __name__ == "__main__":
