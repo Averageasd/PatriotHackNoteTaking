@@ -1,14 +1,25 @@
+import os.path
+
 import boto3
 import api_constant
+import mp4_to_mp3_converter
 
-upload_service = boto3.client(
-    's3',
-    aws_session_token=api_constant.aws_session_token,
-    aws_access_key_id=api_constant.aws_access_key_id,
-    aws_secret_access_key=api_constant.aws_secret_access_key
-)
 
-file = 'samplepdf.pdf'
+class Upload:
+    upload_service = boto3.client(
+        's3',
+        aws_session_token=api_constant.aws_session_token,
+        aws_access_key_id=api_constant.aws_access_key_id,
+        aws_secret_access_key=api_constant.aws_secret_access_key
+    )
 
-upload_service.upload_file(file,'textract-console-us-east-1-fc6e5919-eb3d-46ef-9e60-ffaf768e7f1a',file)
-
+    @staticmethod
+    def uploadFile(file):
+        if "mp4" in os.path.basename(file):
+            converted_mp3 = mp4_to_mp3_converter.get_mp3_from_mp4(file)
+            Upload.upload_service.upload_file(converted_mp3,
+                                              api_constant.bucket_name,
+                                              converted_mp3)
+            os.remove(converted_mp3)
+        elif "pdf" in os.path.basename(file):
+            Upload.upload_service.upload_file(file, api_constant.bucket_name, os.path.basename(file))
