@@ -1,8 +1,11 @@
 # Color?
+import os.path
 import tkinter
 from tkinter import filedialog
 import tkinter.messagebox
 import customtkinter as ctk
+
+import text_extract
 import upload
 
 # PDF
@@ -15,14 +18,16 @@ import upload
 ctk.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 ctk.set_appearance_mode("Dark")
 
+
 class TextFrame(ctk.CTkFrame):
-     def __init__(self, master):
+    def __init__(self, master):
         super().__init__(master)
         self.grid_columnconfigure(0, weight=1)
-        #self.txtTitle = ctk.CTkLabel(self, text="Enter Text Here...")
-        #self.txtTitle.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
-        #self.textBx = ctk.CTkTextbox(self)
-        #self.textBx.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        self.txtTitle = ctk.CTkLabel(self, text="Enter Text Here...")
+        self.txtTitle.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        self.textBx = ctk.CTkTextbox(self)
+        self.textBx.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+
 
 class App(ctk.CTk):
     def __init__(self):
@@ -30,7 +35,7 @@ class App(ctk.CTk):
 
         self.title("Upload File")
         self.minsize(400, 300)
-        
+
         self.grid_columnconfigure(0, weight=1)
         # self.grid_columnconfigure(1, weight=0)
         # self.grid_columnconfigure(2, weight=1)
@@ -46,7 +51,7 @@ class App(ctk.CTk):
 
         self.uploadBtn = ctk.CTkButton(master=self, text="Upload", image=self.upldImg, command=self.upload)
         self.uploadBtn.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
-        
+
         self.txtFrame = TextFrame(self)
         self.txtFrame.grid(row=1, column=0, padx=0, pady=0, sticky="nsew")
 
@@ -55,9 +60,8 @@ class App(ctk.CTk):
         self.filenameLbl.grid(row=2, column=0, padx=0, pady=0, sticky="ew")
         '''
 
-        self.submit = ctk.CTkButton(master=self, text="Submit",command=self.submit)
+        self.submit = ctk.CTkButton(master=self, text="Submit", command=self.submit)
         self.submit.grid(row=2, column=0, padx=0, pady=0, sticky="nsew")
-
 
     def submit(self):
         # File Submission
@@ -66,12 +70,15 @@ class App(ctk.CTk):
         file = open(self.path.get(), "r")
         upload.Upload().uploadFile(self.path.get())
         file.close()
+        text_extract.TextExtract.extract(os.path.basename(self.path.get()))
+        content = open('Output.txt', 'r')
+        self.txtFrame.textBx.insert(ctk.END, content.read())
 
     def upload(self):
         input = filedialog.askopenfilename()
         self.path.set(input)
         print(input)
-    
+
     def login(self):
         pass
 
@@ -81,9 +88,10 @@ class NextApp(ctk.CTk):
         super().__init__()
         pass
 
+
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-    
+
     # nextAPP = NextApp()
     # nextAPP.mainloop()
