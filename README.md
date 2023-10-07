@@ -1,0 +1,1 @@
+Note taking app empowered by OCR and GPT built with python and tkinter
