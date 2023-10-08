@@ -5,8 +5,6 @@ import api_constant
 import mp4_to_mp3_converter
 from dotenv import load_dotenv
 
-
-
 class Upload:
     load_dotenv()
     upload_service = boto3.client(
@@ -18,11 +16,5 @@ class Upload:
 
     @staticmethod
     def uploadFile(file):
-        if "mp4" in os.path.basename(file):
-            converted_mp3 = mp4_to_mp3_converter.get_mp3_from_mp4(file)
-            Upload.upload_service.upload_file(converted_mp3,
-                                              api_constant.bucket_name,
-                                              converted_mp3)
-            os.remove(converted_mp3)
-        elif "pdf" or "mp3" in os.path.basename(file):
+        if "pdf" in os.path.basename(file):
             Upload.upload_service.upload_file(file, api_constant.bucket_name, os.path.basename(file))

@@ -1,3 +1,5 @@
+import os
+
 import boto3
 import api_constant
 
@@ -14,20 +16,12 @@ class TextExtract:
 
     @staticmethod
     def extract(file_name):
-        response = TextExtract.textract_client.start_document_text_detection(
-            DocumentLocation={'S3Object': {'Bucket': api_constant.bucket_name, 'Name': file_name}},
+        print(file_name)
+        response = TextExtract.textract_client.analyze_document(
+            Document={'S3Object': {'Bucket': api_constant.bucket_name, 'Name': os.path.basename(file_name)}},
+            FeatureTypes=["TABLES", "FORMS"]
         )
 
-        print('JobId' in response)
-        jobId = response['JobId']
-
-        while True:
-            response = TextExtract.textract_client.get_document_text_detection(JobId=jobId)
-            status = response['JobStatus']
-
-            if status in ['SUCCEEDED', 'FAILED']:
-                # textract_result = response
-                break
         # Initialize an empty string to store the extracted text
         extracted_text = ""
 
@@ -38,4 +32,6 @@ class TextExtract:
 
         with open("Output.txt", "w") as text_file:
             print("Output: {}".format(extracted_text), file=text_file)
+
+        print("Text processed")
 

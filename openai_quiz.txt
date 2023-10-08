@@ -1,0 +1,71 @@
+1. What is the main topic of the document?
+A. Compression Efficiency
+B. Bilateral Filtering in Video and Image Processing 
+C. Memory Overhead
+D. Photometric Features
+
+2. What is bilateral filtering?
+A. Method that employs photometric features 
+B. High computation cost process
+C. Edge-preserving, filter technique
+D. Both A and C
+
+3. Why is the application of bilateral filtering often limited?
+A. Because it requires minimal memory overhead
+B. Due to its high computation cost
+C. Because it isn't effective
+D. Due to limited spatial orientation of pixels
+
+4. What does the study aim to do with bilateral filtering?
+A. Increase the computation cost
+B. Create a separable implementation
+C. Limit its application
+D. Reduce its efficiency
+
+5. Why is the separable implementation of the bilateral filter considered beneficial?
+A. It's more costly 
+B. It's less effective
+C. It achieves similar filtering quality but faster 
+D. It only uses photometric features
+
+6. Does the new method require substantial memory overhead?
+A. Yes, hence it cannot be used for preprocessing
+B. Yes, though still efficient
+C. No, it can store output directly onto the input's memory
+D. No, but it slows the processing speed
+
+7. What is the new implementation capable of?
+A. Slow image processing
+B. High memory consumption
+C. Fast preprocessing of images and videos
+D. Reduced image quality
+
+8. What are the results of preprocessing the original video with the separable bilateral filter?
+A. Worsened image quality and compression efficiency
+B. Improved image quality but reduced compression efficiency 
+C. Better image quality and higher compression efficiency 
+D. No notable difference in the image quality and compression efficiency
+
+9. What does the bilateral filter technique employ in its operation?
+A. Only photometric features
+B. Only geometric spatial orientation
+C. Both photometric features and geometric spatial orientation
+D. Neither photometric features nor geometric spatial orientation
+
+10. Which statement is true about the adaptive kernel in bilateral filtering?
+A. It doesn't need to be recalculated
+B. It is calculated once for all pixels
+C. It needs to be recalculated every pixel
+D. It doesn't affect the computation cost
+
+Answers: 
+1. B. Bilateral Filtering in Video and Image Processing 
+2. D. Both A and C
+3. B. Due to its high computation cost
+4. B. Create a separable implementation
+5. C. It achieves similar filtering quality but faster 
+6. C. No, it can store output directly onto the input's memory
+7. C. Fast preprocessing of images and videos
+8. C. Better image quality and higher compression efficiency 
+9. C. Both photometric features and geometric spatial orientation
+10. C. It needs to be recalculated every pixel
