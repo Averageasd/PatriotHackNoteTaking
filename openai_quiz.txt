@@ -1,71 +1,71 @@
-1. What causes drift current in semiconductors?
-A) Heat
-B) Light
-C) Electric field
-D) Pressure
+1. What is the cause of drift current?
+   A. Electric fields accelerating holes and electrons in opposite directions
+   B. Concentration gradient
+   C. Holes and electrons moving in the same direction
+   D. None of the above
 
-2. What is true about the movement of holes and electrons due to drift current?
-A) They remain stationary
-B) Move in the same direction
-C) They move in opposite directions
-D) They randomly move
+2. What causes diffusion current to arise?
+   A. Electric fields
+   B. Concentration gradient
+   C. Incoming light energy
+   D. None of the above
 
-3. What is represented by the terms 'p' and 'n' in current calculation derivations?
-A) Heat and light concentrations 
-B) Hole and electron concentrations
-C) Magnetic and electric field strengths
-D) Pressure and volume
+3. What factors determine the mobility of holes and electrons in intrinsic Silicon?
+   A. Diffusion and Gradient
+   B. Drift and Diffusion
+   C. Electric fields and Concentration gradient
+   D. Electric fields and Diffusion
 
-4. Which of the following causes diffusion current?
-A) Electric field
-B) Force
-C) Concentration gradient
-D) Speed
+4. What does the concept of hole and electron current represent?
+   A. The flow of electrons in semiconductors
+   B. The two components of current movement in semiconductors
+   C. The direction of current flow
+   D. The resistivity of the semiconductor
 
-5. What is calculated by summing up the hole current and the electron current?
-A) Voltage
-B) Total current
-C) Electric field
-D) Resistance
+5. What does the equation of hole and electron current describe?
+   A. The concentration gradient
+   B. The movement of holes and electrons
+   C. The total current
+   D. The resistivity of the semiconductor
 
-6. How is resistivity represented in the text?
-A) P
-B) Q
-C) R
-D) S
+6. Understand the concept of total current, which of the following is NOT partly responsible for its determination?
+   A. Electric fields
+   B. Concentration gradient
+   C. The mobility of holes and electrons
+   D. The direction of current flow
 
-7. What is the formula used to calculate resistivity as per the text?
-A) E/I
-B) R = V/I
-C) I = V/R
-D) R = I/V
+7. What is the unit of resistivity?
+   A. Ohm.m
+   B. Ampere
+   C. Volt
+   D. Ohm
 
-8. What are the units of resistivity as mentioned in the text?
-A) s.cm
-B) V/s
-C) Ohms
-D) A/m
+8. Which one of the following is NOT related to current density?
+   A. Electron current
+   B. Hole current
+   C. Concentration gradient
+   D. Total current
 
-9. In the context of the text, what does intrinsic silicon refer to?
-A) Silicon containing impurities
-B) Pure silicon
-C) Silicon with excess of electrons
-D) Silicon with excess of holes
+9. The formula for resistivity includes which of the following?
+   A. Electron current and hole current
+   B. Current density and electric field
+   C. Electric fields and concentration gradient
+   D. Total current and current density 
 
-10. According to the text, what are Mp, Mn and E in the derivations of current calculations?
-A) Variables
-B) Constants
-C) Units
-D) Functions
+10. What direction do electrons and holes move in due to the drift current?
+   A. The same direction
+   B. Opposite directions
+   C. Parallel to each other
+   D. Perpendicular to each other
 
 Answers:
-1. C) Electric field
-2. C) They move in opposite directions
-3. B) Hole and electron concentrations
-4. C) Concentration gradient
-5. B) Total current
-6. D) S
-7. A) E/I
-8. A) s.cm
-9. B) Pure silicon
-10. B) Constants
+1. A
+2. B
+3. C
+4. B
+5. B 
+6. D 
+7. A 
+8. C 
+9. B 
+10. B

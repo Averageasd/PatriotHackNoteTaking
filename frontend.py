@@ -261,7 +261,7 @@ class Reader(ctk.CTk):
         self.speedDrop = ctk.CTkComboBox(master=self, values=self.speedOptions, command=self.play_speed_callback)
         self.speedDrop.grid(row=0, column=4, padx=10, pady=10)
 
-        self.textArea = ctk.CTkTextbox(master=self, wrap="word", font=("roboto", 20))
+        self.textArea = ctk.CTkTextbox(master=self, wrap="word", font=("roboto", 25)) #22
         self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30, pady=30, sticky='nsew')
         
         self.quizBtn = ctk.CTkButton(self,text="Quiz", command=self.generate_quiz)
@@ -432,13 +432,8 @@ class Arcfield(ctk.CTkToplevel):
         videoplayer.play()
 
 if __name__ == "__main__":
-
-    reader = Reader()
-    reader.mainloop() 
-    '''
     uploader = Uploader()
     uploader.mainloop()
     if valid:
         reader = Reader()
         reader.mainloop()    
-'''
