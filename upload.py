@@ -11,9 +11,9 @@ class Upload:
     load_dotenv()
     upload_service = boto3.client(
         's3',
-        aws_session_token=os.getenv('aws_session_token'),
-        aws_access_key_id=os.getenv('aws_access_key_id'),
-        aws_secret_access_key=os.getenv('aws_secret_access_key')
+        aws_session_token=api_constant.aws_session_token,
+        aws_access_key_id=api_constant.aws_access_key_id,
+        aws_secret_access_key=api_constant.aws_secret_access_key
     )
 
     @staticmethod
@@ -24,5 +24,5 @@ class Upload:
                                               api_constant.bucket_name,
                                               converted_mp3)
             os.remove(converted_mp3)
-        elif "pdf" in os.path.basename(file):
+        elif "pdf" or "mp3" in os.path.basename(file):
             Upload.upload_service.upload_file(file, api_constant.bucket_name, os.path.basename(file))

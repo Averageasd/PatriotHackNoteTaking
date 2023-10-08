@@ -4,8 +4,11 @@ import tkinter
 from tkinter import filedialog
 import tkinter.messagebox
 import customtkinter as ctk
+
+import summarize_generate_audio
 import text_extract
 import upload
+import pyglet
 
 # PDF
 # TEXT
@@ -95,7 +98,6 @@ class Uploader(ctk.CTk):
         reader = Reader()
         reader.mainloop()
 
-
     def login(self):
         pass
         self.toplevel_window = None
@@ -133,42 +135,79 @@ class Uploader(ctk.CTk):
 
 
 class Reader(ctk.CTk):
+
     def __init__(self):
         super().__init__()
         self.title("Audio Player")
         self.geometry('800x800')
         self.voiceOptions = [
-            "Voice1",
-            "Voice2",
-            "Voice3"
+            "Mathew",
+            "Joanna",
+            "Amy"
         ]
+
+        self.isPlay = False
+        self.player = pyglet.media.Player()
 
         self.speedOptions = [
             '1x',
-            '2x',
-            '3x',
-            '4x'
+            '1.25x',
+            '1.5x',
+            '1.75x'
         ]
 
-        self.drop = ctk.CTkComboBox(master=self, values=self.voiceOptions)
+        self.drop = ctk.CTkComboBox(master=self, values=self.voiceOptions, command=self.voice_callback)
         self.drop.grid(row=0, column=0, padx=10, pady=10)
 
-        self.backBtn = ctk.CTkButton(master=self, text="Back")
-        self.backBtn.grid(row=0, column=1, padx=10, pady=10)
-
-        self.playBtn = ctk.CTkButton(master=self, text="Play")
+        self.playBtn = ctk.CTkButton(master=self, text="Play", command=self.playVideo)
         self.playBtn.grid(row=0, column=2, padx=10, pady=10)
 
-        self.nextBtn = ctk.CTkButton(master=self, text="Next")
-        self.nextBtn.grid(row=0, column=3, padx=10, pady=10)
-
-        self.drop = ctk.CTkComboBox(master=self, values=self.speedOptions)
-        self.drop.grid(row=0, column=4, padx=10, pady=10)
+        self.speedDrop = ctk.CTkComboBox(master=self, values=self.speedOptions, command=self.play_speed_callback)
+        self.speedDrop.grid(row=0, column=4, padx=10, pady=10)
 
         self.textArea = ctk.CTkTextbox(master=self)
         self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30, pady=30, sticky='nsew')
         content = open('Output.txt', 'r')
-        self.textArea.insert(ctk.END, content.read())
+        summarized = summarize_generate_audio.Summarizer.summarize_text(content.read())
+        self.textArea.insert(ctk.END, summarized)
+        summarize_generate_audio.Summarizer.generate_video(summarized)
+        self.source = pyglet.media.load('polly_summary_Matthew.mp3', streaming=False)
+        self.player.queue(self.source)
+
+    def playVideo(self):
+        if not self.isPlay:
+            self.player.play()
+            self.isPlay = True
+        else:
+            self.player.pause()
+            self.isPlay = False
+
+    def voice_callback(self, choice):
+        if self.player.playing:
+            self.player.pause()
+        self.player = pyglet.media.Player()
+
+        if choice == "Mathew":
+            print("combobox dropdown clicked:", choice)
+            media = pyglet.media.load("polly_summary_Matthew.mp3")
+            self.player.queue(media)
+        elif choice == "Joanna":
+            media = pyglet.media.load("polly_summary_Joanna.mp3")
+            self.player.queue(media)
+        elif choice == "Amy":
+            media = pyglet.media.load("polly_summary_Amy.mp3")
+            self.player.queue(media)
+        self.isPlay = False
+
+    def play_speed_callback(self, choice):
+        if choice == "1x":
+            self.player.pitch = 1
+        elif choice == "1.25x":
+            self.player.pitch = 1.25
+        elif choice == "1.5x":
+            self.player.pitch = 1.5
+        elif choice == "1.75x":
+            self.player.pitch = 1.75
 
 
 if __name__ == "__main__":
