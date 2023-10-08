@@ -1,9 +1,8 @@
 import openai
-import api_constant
-
+import os
 
 class CreateQuiz:
-    openai.api_key = api_constant.OPENAI_API_KEY
+    openai.api_key = os.environ.get("OPENAI_API_KEY")
 
     def __int__(self):
         pass

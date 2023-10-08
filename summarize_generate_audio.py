@@ -1,7 +1,7 @@
 import boto3
 import openai
-import api_constant
-
+import os
+from dotenv import load_dotenv
 
 class Summarizer:
     # s3_client = boto3.client('s3',
@@ -11,15 +11,16 @@ class Summarizer:
     #                          aws_session_token=api_constant.aws_session_token)
 
     # Initialize the Polly client with credentials
+    load_dotenv()
     polly_client = boto3.client('polly',
-                                region_name=api_constant.aws_default_region,
-                                aws_access_key_id=api_constant.aws_access_key_id,
-                                aws_secret_access_key=api_constant.aws_secret_access_key,
-                                aws_session_token=api_constant.aws_session_token)
+                                region_name= os.environ.get("AWS_DEFAULT_REGION"),
+                                aws_access_key_id= os.environ.get("AWS_ACCESS_KEY_ID"),
+                                aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"),
+                                aws_session_token= os.environ.get("AWS_SESSION_TOKEN"))
 
     @staticmethod
     def summarize_text(text):
-        openai.api_key = api_constant.OPENAI_API_KEY
+        openai.api_key = os.environ.get("OPENAI_API_KEY")
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[

@@ -261,13 +261,10 @@ class Reader(ctk.CTk):
         self.speedDrop = ctk.CTkComboBox(master=self, values=self.speedOptions, command=self.play_speed_callback)
         self.speedDrop.grid(row=0, column=4, padx=10, pady=10)
 
-        self.textArea = ctk.CTkTextbox(master=self, wrap="word")
+        self.textArea = ctk.CTkTextbox(master=self, wrap="word", font=("roboto", 20))
         self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30, pady=30, sticky='nsew')
-
-        self.genQuizBtn = ctk.CTkButton(master=self, text="Generate quiz", command=self.generate_quiz)
-        self.genQuizBtn.grid(row=2, column=0, padx=30, pady=30)
         
-        self.quizBtn = ctk.CTkButton(self,text="Quiz", command=self.openQuiz)
+        self.quizBtn = ctk.CTkButton(self,text="Quiz", command=self.generate_quiz)
         self.quizBtn.grid(row=2, column=1, padx=20, pady=30, sticky='nsew')
 
         self.vidBtn = ctk.CTkButton(self,text="Video", command=self.openVid)
@@ -357,20 +354,12 @@ class Reader(ctk.CTk):
             self.images_window = Images(self)
         else:
             self.images_window.focus()
-
-    def openQuiz(self):
-        if self.quiz_window is None or not self.quiz_window.winfo_exists():
-            self.quiz_window = Quiz(self)
-        else:
-            self.quiz_window.focus()
     
     def openVid(self):
         if self.video_window is None or not self.video_window.winfo_exists():
             self.video_window = Arcfield(self)
         else:
             self.video_window.focus()
-    
-    
 
 # FINISH
     def optOnHover(self, event):
@@ -432,7 +421,6 @@ class Quiz(ctk.CTkToplevel):
         content.close()
         # openai_quiz.txt
 
-
 class Arcfield(ctk.CTkToplevel):
     def __init__(self, *args, **kwargs):
         super().__init__( *args, **kwargs)
@@ -442,10 +430,15 @@ class Arcfield(ctk.CTkToplevel):
         videoplayer.load(r"./arcfield_video1.mp4")
         videoplayer.pack(expand=True, fill="both")
         videoplayer.play()
+
 if __name__ == "__main__":
 
+    reader = Reader()
+    reader.mainloop() 
+    '''
     uploader = Uploader()
     uploader.mainloop()
     if valid:
         reader = Reader()
         reader.mainloop()    
+'''

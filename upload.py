@@ -1,20 +1,19 @@
 import os.path
 
 import boto3
-import api_constant
-import mp4_to_mp3_converter
 from dotenv import load_dotenv
+
 
 class Upload:
     load_dotenv()
     upload_service = boto3.client(
         's3',
-        aws_session_token=api_constant.aws_session_token,
-        aws_access_key_id=api_constant.aws_access_key_id,
-        aws_secret_access_key=api_constant.aws_secret_access_key
+        aws_session_token= os.environ.get("AWS_SESSION_TOKEN"),
+        aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
     )
 
     @staticmethod
     def uploadFile(file):
         if "pdf" in os.path.basename(file):
-            Upload.upload_service.upload_file(file, api_constant.bucket_name, os.path.basename(file))
+            Upload.upload_service.upload_file(file, os.environ.get("BUCKET_NAME"), os.path.basename(file))

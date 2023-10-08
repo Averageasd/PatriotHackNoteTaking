@@ -1,15 +1,15 @@
 import os
-
+from dotenv import load_dotenv
 import boto3
-import api_constant
 
 
 class TextExtract:
+    load_dotenv()
     textract_client = boto3.client('textract',
-                                   region_name=api_constant.aws_default_region,
-                                   aws_access_key_id=api_constant.aws_access_key_id,
-                                   aws_secret_access_key=api_constant.aws_secret_access_key,
-                                   aws_session_token=api_constant.aws_session_token)
+                                   region_name= os.environ.get("AWS_DEFAULT_REGION"),
+                                   aws_access_key_id= os.environ.get("AWS_ACCESS_KEY_ID"),
+                                   aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"),
+                                   aws_session_token= os.environ.get("AWS_SESSION_TOKEN"))
 
     def __int__(self):
         pass
@@ -18,7 +18,7 @@ class TextExtract:
     def extract(file_name):
         print(file_name)
         response = TextExtract.textract_client.analyze_document(
-            Document={'S3Object': {'Bucket': api_constant.bucket_name, 'Name': os.path.basename(file_name)}},
+            Document={'S3Object': {'Bucket': os.environ.get("BUCKET_NAME"), 'Name': os.path.basename(file_name)}},
             FeatureTypes=["TABLES", "FORMS"]
         )
 
