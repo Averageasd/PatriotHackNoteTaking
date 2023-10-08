@@ -1,71 +1,71 @@
-1. What is the main topic of the document?
-A. Compression Efficiency
-B. Bilateral Filtering in Video and Image Processing 
-C. Memory Overhead
-D. Photometric Features
+1. What causes drift current in semiconductors?
+A) Heat
+B) Light
+C) Electric field
+D) Pressure
 
-2. What is bilateral filtering?
-A. Method that employs photometric features 
-B. High computation cost process
-C. Edge-preserving, filter technique
-D. Both A and C
+2. What is true about the movement of holes and electrons due to drift current?
+A) They remain stationary
+B) Move in the same direction
+C) They move in opposite directions
+D) They randomly move
 
-3. Why is the application of bilateral filtering often limited?
-A. Because it requires minimal memory overhead
-B. Due to its high computation cost
-C. Because it isn't effective
-D. Due to limited spatial orientation of pixels
+3. What is represented by the terms 'p' and 'n' in current calculation derivations?
+A) Heat and light concentrations 
+B) Hole and electron concentrations
+C) Magnetic and electric field strengths
+D) Pressure and volume
 
-4. What does the study aim to do with bilateral filtering?
-A. Increase the computation cost
-B. Create a separable implementation
-C. Limit its application
-D. Reduce its efficiency
+4. Which of the following causes diffusion current?
+A) Electric field
+B) Force
+C) Concentration gradient
+D) Speed
 
-5. Why is the separable implementation of the bilateral filter considered beneficial?
-A. It's more costly 
-B. It's less effective
-C. It achieves similar filtering quality but faster 
-D. It only uses photometric features
+5. What is calculated by summing up the hole current and the electron current?
+A) Voltage
+B) Total current
+C) Electric field
+D) Resistance
 
-6. Does the new method require substantial memory overhead?
-A. Yes, hence it cannot be used for preprocessing
-B. Yes, though still efficient
-C. No, it can store output directly onto the input's memory
-D. No, but it slows the processing speed
+6. How is resistivity represented in the text?
+A) P
+B) Q
+C) R
+D) S
 
-7. What is the new implementation capable of?
-A. Slow image processing
-B. High memory consumption
-C. Fast preprocessing of images and videos
-D. Reduced image quality
+7. What is the formula used to calculate resistivity as per the text?
+A) E/I
+B) R = V/I
+C) I = V/R
+D) R = I/V
 
-8. What are the results of preprocessing the original video with the separable bilateral filter?
-A. Worsened image quality and compression efficiency
-B. Improved image quality but reduced compression efficiency 
-C. Better image quality and higher compression efficiency 
-D. No notable difference in the image quality and compression efficiency
+8. What are the units of resistivity as mentioned in the text?
+A) s.cm
+B) V/s
+C) Ohms
+D) A/m
 
-9. What does the bilateral filter technique employ in its operation?
-A. Only photometric features
-B. Only geometric spatial orientation
-C. Both photometric features and geometric spatial orientation
-D. Neither photometric features nor geometric spatial orientation
+9. In the context of the text, what does intrinsic silicon refer to?
+A) Silicon containing impurities
+B) Pure silicon
+C) Silicon with excess of electrons
+D) Silicon with excess of holes
 
-10. Which statement is true about the adaptive kernel in bilateral filtering?
-A. It doesn't need to be recalculated
-B. It is calculated once for all pixels
-C. It needs to be recalculated every pixel
-D. It doesn't affect the computation cost
+10. According to the text, what are Mp, Mn and E in the derivations of current calculations?
+A) Variables
+B) Constants
+C) Units
+D) Functions
 
-Answers: 
-1. B. Bilateral Filtering in Video and Image Processing 
-2. D. Both A and C
-3. B. Due to its high computation cost
-4. B. Create a separable implementation
-5. C. It achieves similar filtering quality but faster 
-6. C. No, it can store output directly onto the input's memory
-7. C. Fast preprocessing of images and videos
-8. C. Better image quality and higher compression efficiency 
-9. C. Both photometric features and geometric spatial orientation
-10. C. It needs to be recalculated every pixel
+Answers:
+1. C) Electric field
+2. C) They move in opposite directions
+3. B) Hole and electron concentrations
+4. C) Concentration gradient
+5. B) Total current
+6. D) S
+7. A) E/I
+8. A) s.cm
+9. B) Pure silicon
+10. B) Constants

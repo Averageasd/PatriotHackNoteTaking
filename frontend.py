@@ -5,7 +5,6 @@ import tkinter.messagebox
 import customtkinter as ctk
 
 import quiz_generator
-# <<<<<<< HEAD
 
 import summarize_generate_audio
 import text_extract
@@ -13,13 +12,8 @@ import upload
 import pyglet
 from fpdf import FPDF
 
-# PDF
-# TEXT
-# VIDEO
-# AUDIO
-
-# Multiple files at once?
 from PIL import Image, ImageTk
+from tkVideoPlayer import TkinterVideo
 import os
 import upload
 import text_extract
@@ -27,7 +21,7 @@ import text_extract
 global valid
 valid = False
 
-ctk.set_default_color_theme("./customGreen.json")  # Themes: "blue" (standard), "green", "dark-blue"
+ctk.set_default_color_theme("./customGreen.json")
 ctk.set_appearance_mode("Light")
 
 
@@ -41,19 +35,6 @@ class TextFrame(ctk.CTkFrame):
         self.txtTitle.grid(row=0, column=0, padx=5, pady=(10, 0), sticky="nsew")
         self.textBx = ctk.CTkTextbox(self)
         self.textBx.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
-
-
-class UploadFrame(ctk.CTkFrame):
-    def __init__(self, master):
-        super().__init__(master)
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=0)
-        self.grid_rowconfigure(1, weight=1)
-        self.upldImg = ctk.CTkLabel(self, text="Enter Text Here...", text_color="white", font=("Roboto", 25))
-        self.upldImg.grid(row=0, column=0, padx=5, pady=(10, 0), sticky="nsew")
-        self.uploadBtn = ctk.CTkTextbox(self)
-        self.uploadBtn.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
-
 
 class ErrorWindow(ctk.CTkToplevel):
     def __init__(self, *args, **kwargs):
@@ -126,34 +107,11 @@ class Uploader(ctk.CTk):
         self.txtFrame.grid_propagate(False)
 
         self.filenameLbl = ctk.CTkLabel(master=self, textvariable=self.filename, text="default")
-        self.filenameLbl.grid(row=3, column=0, padx=0, pady=0, sticky="ew")
+        self.filenameLbl.grid(row=3, column=0, padx=0, pady=(0,5), sticky="ew")
+        
+        self.submitBtn = ctk.CTkButton(master=self, text="Submit",command=self.submit, width=self.mainW)
+        self.submitBtn.grid(row=4, column=0, padx=15, pady=(0,15), sticky="ns")
 
-        self.submitBtn = ctk.CTkButton(master=self, text="Submit", command=self.submit, width=self.mainW)
-        self.submitBtn.grid(row=4, column=0, padx=15, pady=(0, 15), sticky="ns")
-
-    # <<<<<<< HEAD
-    #         self.submitBtn = ctk.CTkButton(master=self, text="Submit", command=self.submit)
-    #         self.submitBtn.grid(row=3, column=0, padx=0, pady=0, sticky="nsew")
-
-    # self.submit = ctk.CTkButton(master=self, text="Submit", command=self.submit)
-    # self.submit.grid(row=2, column=0, padx=0, pady=0, sticky="nsew")
-
-    # def submit(self):
-    #     # File Submission
-    #     # Check upload then textbx
-    #     print("Submit Called")
-    #     file = open(self.path.get(), "r")
-    #     upload.Upload().uploadFile(self.path.get())
-    #     file.close()
-    #     text_extract.TextExtract.extract(os.path.basename(self.path.get()))
-    #     self.destroy()
-    #     reader = Reader()
-    #     reader.mainloop()
-
-    def login(self):
-        pass
-        # =======
-        # >>>>>>> cc9b4756ee012b0e3363b9fc7c1bcd88e1ae7cf2
         self.toplevel_window = None
         self.uploadBtn.bind('<Enter>', self.upOnHover)
         self.uploadBtn.bind('<Leave>', self.upOffHover)
@@ -201,6 +159,7 @@ class Uploader(ctk.CTk):
         elif self.txtFrame.textBx.get("0.0", "end") != "\n":
             with open("file.txt", "w") as text_file:
                 print("Output: {}".format(self.txtFrame.textBx.get("0.0", "end")), file=text_file)
+            self.genLoading()
             file = open("file.txt","r")
             pdf = FPDF()
 
@@ -223,7 +182,7 @@ class Uploader(ctk.CTk):
             text_extract.TextExtract.extract(os.path.basename("file.pdf"))
             valid = True
             print("destroying")
-            self.genLoading()
+            
             self.after(1000, self.destroy)
         else:
             print("Error Uploading File or Receiving Text")
@@ -240,6 +199,8 @@ class Uploader(ctk.CTk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
         self.grid_rowconfigure(2, weight=0)
+        self.grid_rowconfigure(3, weight=0)
+        self.grid_rowconfigure(4, weight=0)
 
         self.uploadBtn.destroy()
         self.txtFrame.destroy()
@@ -247,8 +208,10 @@ class Uploader(ctk.CTk):
         self.submitBtn.destroy()
         self.header.destroy()
 
-        self.loadingLbl = ctk.CTkLabel(self, text="Uploading...", fg_color="green")
+        self.loadingImg = tkinter.PhotoImage(file="./Loading.png")
+        self.loadingLbl = ctk.CTkLabel(self, image=self.loadingImg, text="Processing...", text_color="black", compound="top", font=("Roboto", 30, "bold"))
         self.loadingLbl.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
+        self.update()
 
 
 class Reader(ctk.CTk):
@@ -258,6 +221,8 @@ class Reader(ctk.CTk):
         self.title("Audio Player")
         self.geometry('800x800')
 
+        self.flag = True
+
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
@@ -265,6 +230,7 @@ class Reader(ctk.CTk):
         self.grid_columnconfigure(4, weight=1)
         self.grid_rowconfigure(0, weight=0)
         self.grid_rowconfigure(1, weight=1)
+        
 
         self.voiceOptions = [
             "Mathew",
@@ -282,34 +248,34 @@ class Reader(ctk.CTk):
             '1.75x'
         ]
 
-        # <<<<<<< HEAD
-        # self.drop = ctk.CTkComboBox(master=self, values=self.voiceOptions, command=self.voice_callback)
-        # self.drop.grid(row=0, column=0, padx=10, pady=10)
-        # =======
-        self.dropOpt = ctk.CTkComboBox(master=self, values=self.voiceOptions, command=self.voice_callback)
+        self.images_window = None
+        self.quiz_window = None
+        self.video_window = None
+
+        self.dropOpt = ctk.CTkComboBox(master=self, values=self.voiceOptions)
         self.dropOpt.grid(row=0, column=0, padx=10, pady=10)
-        # >>>>>>> cc9b4756ee012b0e3363b9fc7c1bcd88e1ae7cf2
 
         self.playBtn = ctk.CTkButton(master=self, text="Play", command=self.playVideo)
         self.playBtn.grid(row=0, column=2, padx=10, pady=10)
 
-        # <<<<<<< HEAD
         self.speedDrop = ctk.CTkComboBox(master=self, values=self.speedOptions, command=self.play_speed_callback)
         self.speedDrop.grid(row=0, column=4, padx=10, pady=10)
-        # =======
-        # self.nextBtn = ctk.CTkButton(master=self, text="Next")
-        # self.nextBtn.grid(row=0, column=3, padx=10, pady=10)
-
-        # self.dropSpd = ctk.CTkComboBox(master=self, values=self.speedOptions, variable=)
-        # self.dropSpd.grid(row=0, column=4, padx=10, pady=10)
-        # >>>>>>> cc9b4756ee012b0e3363b9fc7c1bcd88e1ae7cf2
 
         self.textArea = ctk.CTkTextbox(master=self, wrap="word")
         self.textArea.grid(row=1, column=0, columnspan=5, ipady=300, padx=30, pady=30, sticky='nsew')
+
         self.genQuizBtn = ctk.CTkButton(master=self, text="Generate quiz", command=self.generate_quiz)
         self.genQuizBtn.grid(row=2, column=0, padx=30, pady=30)
+        
+        self.quizBtn = ctk.CTkButton(self,text="Quiz", command=self.openQuiz)
+        self.quizBtn.grid(row=2, column=1, padx=20, pady=30, sticky='nsew')
+
+        self.vidBtn = ctk.CTkButton(self,text="Video", command=self.openVid)
+        self.vidBtn.grid(row=2, column=2, padx=20, pady=30, sticky='nsew')
+
+        self.imageBtn = ctk.CTkButton(self,text="Images", command=self.openImages)
+        self.imageBtn.grid(row=2, column=3, padx=20, pady=30, sticky='nsew')
         content = open('Output.txt', 'r')
-        # <<<<<<< HEAD
         summarized = summarize_generate_audio.Summarizer.summarize_text(content.read())
         self.textArea.insert(ctk.END, summarized)
         summarize_generate_audio.Summarizer.generate_video(summarized)
@@ -325,7 +291,13 @@ class Reader(ctk.CTk):
             self.isPlay = False
 
     def generate_quiz(self):
-        quiz_generator.CreateQuiz.create_quiz(self.textArea.get("0.0","end"))
+        if (self.flag):
+            quiz_generator.CreateQuiz.create_quiz(self.textArea.get("0.0","end"))
+            self.flag = False
+        if self.quiz_window is None or not self.quiz_window.winfo_exists():
+            self.quiz_window = Quiz(self)
+        else:
+            self.quiz_window.focus()
 
 
     # def create_quiz(api_key, text):
@@ -374,22 +346,106 @@ class Reader(ctk.CTk):
     def optOffHover(self, event):
         self.uploadBtn.configure(border_color="#FFFFFF", fg_color="gray20")
 
-    # def bacckOnHover(self, event):
-    #     self.submitBtn.configure(border_color="#4ad66d", fg_color="gray15")
-    #
-    # def backOffHover(self, event):
-    #     self.submitBtn.configure(border_color="#FFFFFF", fg_color="gray20")
-    #
-    # def playOnHover(self, event):
-    #     self.txtFrame.textBx.configure(border_color="#4ad66d", border_width=2)
-    #
-    # def playOffHover(self, event):
-    #     self.txtFrame.textBx.configure(border_color="#FFFFFF", border_width=0)
+    def playOnHover(self, event):
+        self.txtFrame.textBx.configure(border_color="#4ad66d", border_width=2)
+    
+    def playOffHover(self, event):
+        self.txtFrame.textBx.configure(border_color="#FFFFFF", border_width=0)
 
+    def openImages(self):
+        if self.images_window is None or not self.images_window.winfo_exists():
+            self.images_window = Images(self)
+        else:
+            self.images_window.focus()
+
+    def openQuiz(self):
+        if self.quiz_window is None or not self.quiz_window.winfo_exists():
+            self.quiz_window = Quiz(self)
+        else:
+            self.quiz_window.focus()
+    
+    def openVid(self):
+        if self.video_window is None or not self.video_window.winfo_exists():
+            self.video_window = Arcfield(self)
+        else:
+            self.video_window.focus()
+    
+    
+
+# FINISH
+    def optOnHover(self, event):
+        self.uploadBtn.configure(border_color="#4ad66d", fg_color="gray15")
+    def optOffHover(self, event):
+        self.uploadBtn.configure(border_color="#FFFFFF", fg_color="gray20")
+    def bacckOnHover(self, event):
+        self.submitBtn.configure(border_color="#4ad66d", fg_color="gray15")
+    def backOffHover(self, event):
+        self.submitBtn.configure(border_color="#FFFFFF", fg_color="gray20")
+    def playOnHover(self, event):
+        self.txtFrame.textBx.configure(border_color="#4ad66d", border_width=2)
+    def playOffHover(self, event):
+        self.txtFrame.textBx.configure(border_color="#FFFFFF", border_width=0)
+
+class Images(ctk.CTkToplevel):
+    def __init__(self, *args, **kwargs):
+        super().__init__( *args, **kwargs)
+        self.title("View Images")
+        self.minsize(550, 550)
+
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=0)
+        self.grid_columnconfigure(2, weight=0)
+        self.grid_columnconfigure(3, weight=0)
+        self.grid_columnconfigure(4, weight=0)
+
+        self.grid_rowconfigure(0, weight=1)
+
+        self.imgFrame = ctk.CTkScrollableFrame(self, fg_color="#fffffa", border_width=0)
+        self.images = os.listdir("./extracted_images")
+        print(self.images)
+        for i,img in enumerate(self.images):
+            self.imgFrame.grid_rowconfigure(i, weight=0)
+            self.im = tkinter.PhotoImage(master=self.imgFrame,file="./extracted_images/"+str(img))
+            self.imLbl = ctk.CTkLabel(self.imgFrame, image=self.im, text="")
+            self.imLbl.grid(row=i, column=0, padx=20, pady=20, sticky="nsew")
+        self.imgFrame.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
+
+class Quiz(ctk.CTkToplevel):
+    def __init__(self, *args, **kwargs):
+        super().__init__( *args, **kwargs)
+        self.title("View Images")
+        self.minsize(550, 550)
+
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=0)
+        self.grid_columnconfigure(2, weight=0)
+        self.grid_columnconfigure(3, weight=0)
+        self.grid_columnconfigure(4, weight=0)
+
+        self.grid_rowconfigure(0, weight=1)
+
+        self.textArea = ctk.CTkTextbox(master=self, wrap="word")
+        self.textArea.grid(row=0, column=0, columnspan=5, ipady=300, padx=30, pady=30, sticky='nsew')
+        content = open('openai_quiz.txt', 'r')
+        self.textArea.insert(ctk.END, content.read())
+        self.textArea.configure(state="disabled")
+        content.close()
+        # openai_quiz.txt
+
+
+class Arcfield(ctk.CTkToplevel):
+    def __init__(self, *args, **kwargs):
+        super().__init__( *args, **kwargs)
+        self.title("View Images")
+        self.minsize(1920, 1080)
+        videoplayer = TkinterVideo(master=self, scaled=True)
+        videoplayer.load(r"./arcfield_video1.mp4")
+        videoplayer.pack(expand=True, fill="both")
+        videoplayer.play()
 if __name__ == "__main__":
 
     uploader = Uploader()
     uploader.mainloop()
     if valid:
         reader = Reader()
-        reader.mainloop()
+        reader.mainloop()    
