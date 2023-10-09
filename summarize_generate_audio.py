@@ -24,7 +24,7 @@ class Summarizer:
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "You are a college student tutor. Make a comprehensive and useful summary of the provided text. Make it look very visually appealing. Include lots of line breaks, titles, bullet points but do not use markup language. Add a TL:DR section at the end. You can add a lot of emojis, please use a lot of emojis whenever possible."},
+                {"role": "system", "content": "You are a college student tutor. Make a comprehensive and useful summary of the provided text. Make it look very visually appealing. Include lots of line breaks, titles, bullet points but do not use markup language or emojis. ASCii is fine. Add a TL:DR section at the end."},
                 {"role": "user", "content": f"{text}"}
             ],
             max_tokens = 400

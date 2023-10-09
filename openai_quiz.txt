@@ -1,71 +1,76 @@
-1. What is the cause of drift current?
-   A. Electric fields accelerating holes and electrons in opposite directions
-   B. Concentration gradient
-   C. Holes and electrons moving in the same direction
-   D. None of the above
+nm to 100 nm.
 
-2. What causes diffusion current to arise?
-   A. Electric fields
-   B. Concentration gradient
-   C. Incoming light energy
-   D. None of the above
+Quiz Questions 
 
-3. What factors determine the mobility of holes and electrons in intrinsic Silicon?
-   A. Diffusion and Gradient
-   B. Drift and Diffusion
-   C. Electric fields and Concentration gradient
-   D. Electric fields and Diffusion
+1. Who originally invented the solid-state electric-field-controlled conductor?
+    A) Oskar Heil
+    B) Martin Atalla
+    C) Julius E. Lilienfeld
+    D) William Shockley
 
-4. What does the concept of hole and electron current represent?
-   A. The flow of electrons in semiconductors
-   B. The two components of current movement in semiconductors
-   C. The direction of current flow
-   D. The resistivity of the semiconductor
+2. Where was the patent for the electric-field-controlled conductor originally filed? 
+   A) Canada
+   B) Germany
+   C) United States
+   D) United Kingdom
 
-5. What does the equation of hole and electron current describe?
-   A. The concentration gradient
-   B. The movement of holes and electrons
-   C. The total current
-   D. The resistivity of the semiconductor
+3. In which year did Oskar Heil file a patent for a similar idea of electric-field-controlled conductor? 
+   A) 1926
+   B) 1928
+   C) 1934
+   D) 1960
 
-6. Understand the concept of total current, which of the following is NOT partly responsible for its determination?
-   A. Electric fields
-   B. Concentration gradient
-   C. The mobility of holes and electrons
-   D. The direction of current flow
+4. What hindered the development of the field-effect transistor? 
+   A) Lack of available technology
+   B) Development of bipolar transistors
+   C) High cost of research
+   D) Both A and B 
 
-7. What is the unit of resistivity?
-   A. Ohm.m
-   B. Ampere
-   C. Volt
-   D. Ohm
+5. Who filed the patent for MOSFET in 1960?
+   A) Oskar Heil and William Shockley
+   B) Julius E. Lilienfeld and Oskar Heil
+   C) Dawon Kahng and Martin Atalla
+   D) Julius E. Lilienfeld and William Shockley
+   
+6. Which of these is a key component of integrated-circuit chips?
+   A) NMOS
+   B) Bipolar transistors
+   C) MOSFET
+   D) Both A and C
 
-8. Which one of the following is NOT related to current density?
-   A. Electron current
-   B. Hole current
-   C. Concentration gradient
-   D. Total current
+7. What are the parts of an NMOS Transistor?
+   A) Source, Gate, Drain, and Body
+   B) Base, Emitter, and Collector
+   C) MOSFET, Source, and Drain
+   D) Drain, Base, and Emitter
 
-9. The formula for resistivity includes which of the following?
-   A. Electron current and hole current
-   B. Current density and electric field
-   C. Electric fields and concentration gradient
-   D. Total current and current density 
+8. The composition of NMOS consists of:
+   A) Oxide, Metal, and n-type substrate
+   B) Oxide, Metal, and p-type substrate
+   C) Oxide, Glass, p-type substrate
+   D) Oxide, Metal, Silicon
 
-10. What direction do electrons and holes move in due to the drift current?
-   A. The same direction
-   B. Opposite directions
-   C. Parallel to each other
-   D. Perpendicular to each other
+9. What is the typical range for the length (L) of an NMOS transistor?
+   A) 0.03 um to 0.05 um 
+   B) 0.03 um to 1 um
+   C) 1 nm to 100 nm
+   D) 0.05 um to 100 um
 
-Answers:
-1. A
-2. B
-3. C
-4. B
-5. B 
-6. D 
-7. A 
-8. C 
-9. B 
-10. B
+10. What is the range for the thickness of an NMOS transistor’s oxide layer (tox)?
+    A) 1 um to 100 um
+    B) 1 nm to 100 nm
+    C) 0.03 um to 1 um
+    D) 0.05 um to 100 um
+
+Quiz Answers: 
+
+1. C) Julius E. Lilienfeld  
+2. A) Canada
+3. C) 1934
+4. D) Both A and B
+5. C) Dawon Kahng and Martin Atalla
+6. D) Both A and C
+7. A) Source, Gate, Drain, and Body
+8. B) Oxide, Metal, and p-type substrate
+9. B) 0.03 um to 1 um
+10. B) 1 nm to 100 nm.

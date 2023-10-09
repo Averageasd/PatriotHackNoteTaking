@@ -1,36 +1,48 @@
-✍️🎓 CURRENT FLOW IN SEMICONDUCTORS SUMMARY 📚💡
+Title: A Brief History and Physical Structure of NMOS
 
-⚡🌀 SECTION 1: DRIFT CURRENT
-➡️ Occurs due to the influence of an electric field
-➡️ Involves holes and electrons accelerated in opposite directions
-➡️ Factoid: Hole mobility (Mp) = 480 cm2/v.s for intrinsic Si
+I. Origin and Development of NMOS
 
-👆📊 Equations:
-- V Updrift = MpE 
-- V. n-drift = - MnE, / Mn = 1350 cm/V.S for intrinsic Si
+   A) Birth of Solid-state Electric-field-controlled Conductor
 
-🧐🔍Note: Negative sign is there to indicate opposite direction of flow
+    - Invented by Julius E. Lilienfeld, a physicist from University of Leipzig, in 1925.
+    - Patent filed in Canada.
+  
+    B) Refinement and Expansion in the United States
+    
+    - Further patents were filed in the U.S. in 1926 and 1928.
+    
+    C) Heil's Contribution
+    
+    - In 1934, German physicist Oskar Heil filed a patent for a similar idea at the University of Cambridge.
 
-💫✨ SECTION 2: DIFFUSION CURRENT
-➡️ Occurs due to concentration gradient
+    D) Obstacles and Delays
+    
+    - Development hindered as technology wasn't available.
+    - Advent of bipolar transistors in 1947 overshadowed field-effect transistor development.
+    
+    E) William Shockley's Paper and Birth of MOSFET
+    
+    - Field-effect device described in a 1952 paper by William Shockley.
+    - Patent for MOSFET filed in 1960 by Dawon Kahng and Martin Atalla at Bell Labs.
 
-💫📊 Equations:
-- Hole Current (Ip) = Aq p (MpE)
-- Electron Current (In) = - Agn (-Mn E)
+II. Modern Domination of NMOS
 
-💥 SECTION 3: CURRENT DENSITY
-➡️ Jp = Ip = qp Mp E A
-➡️ In = In = gnME A
+    - Key component of integrated-circuit chips.
+    - Dominates the world of electronics with billions of MOS devices contained in today's chips.
 
-💥📊 Equations:
-- Total Current J= Jn+ Jp = q (PMp + num) E
-- Also J=JE or J = E/S
-- Resistivity S = I 9(pMp+nMn)
 
-📐⚙️ MECHANICS OF CURRENT
-➡️ J - Conductivity J= q (pMp + nMn) 
-➡️ Units of S are s.cm 2cm = V/cm = V cm J A/cm2 A = rcm
-➡️Used to measure and understand the flow of current
+III. Physical Structure of NMOS Transistor (Refer to Figure 5.1)
 
-👉👀 TL;DR: 🚀🗒️
-The text discusses two types of current flow in semiconductors: drift and diffusion.
+    A) Parts of NMOS Transistor 
+
+    - Contains Source (S), Gate (G), Drain (D), and Body (B).
+
+    B) Composition 
+
+    - Consists of an Oxide (SiO2), Metal, and p-type substrate (Body). Channel region between n regions.
+
+    C) Size specifications 
+
+    - L ranges from 0.03 um to 1 um
+    - W ranges from 0.05 um to 100 um
+    - Thickness of oxide layer (tox) ranges from 1

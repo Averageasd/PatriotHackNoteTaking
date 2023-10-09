@@ -1,17 +1,15 @@
-# Color?
 import tkinter
 from tkinter import filedialog
 import tkinter.messagebox
 import customtkinter as ctk
-
+from pdf2image import convert_from_path
+import cv2
 import quiz_generator
-
 import summarize_generate_audio
 import text_extract
 import upload
 import pyglet
 from fpdf import FPDF
-
 from PIL import Image, ImageTk
 from tkVideoPlayer import TkinterVideo
 import os
@@ -20,6 +18,8 @@ import text_extract
 
 global valid
 valid = False
+
+global pdfFile
 
 ctk.set_default_color_theme("./customGreen.json")
 ctk.set_appearance_mode("Light")
@@ -149,6 +149,8 @@ class Uploader(ctk.CTk):
                 self.displayError()
                 return
             self.genLoading()
+            global pdfFile
+            pdfFile = self.path.get()
             file = open(self.path.get(), "r")
             upload.Upload().uploadFile(self.path.get())
             file.close()
@@ -157,29 +159,9 @@ class Uploader(ctk.CTk):
             print("destroying")
             self.after(1000, self.destroy)
         elif self.txtFrame.textBx.get("0.0", "end") != "\n":
-            with open("file.txt", "w") as text_file:
+            with open("Output.txt", "w") as text_file:
                 print("Output: {}".format(self.txtFrame.textBx.get("0.0", "end")), file=text_file)
             self.genLoading()
-            file = open("file.txt","r")
-            pdf = FPDF()
-
-            # Add a page
-            pdf.add_page()
-
-            # set style and size of font
-            # that you want in the pdf
-            pdf.set_font("Arial", size=15)
-
-            # open the text file in read mode
-
-            # insert the texts in pdf
-            for x in file:
-                pdf.cell(200, 10, txt=x, ln=1, align='C')
-
-            # save the pdf with name .pdf
-            pdf.output("file.pdf")
-            upload.Upload().uploadFile("file.pdf")
-            text_extract.TextExtract.extract(os.path.basename("file.pdf"))
             valid = True
             print("destroying")
             
@@ -222,6 +204,7 @@ class Reader(ctk.CTk):
         self.geometry('800x800')
 
         self.flag = True
+        self.imgFlag = True
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -252,7 +235,7 @@ class Reader(ctk.CTk):
         self.quiz_window = None
         self.video_window = None
 
-        self.dropOpt = ctk.CTkComboBox(master=self, values=self.voiceOptions)
+        self.dropOpt = ctk.CTkComboBox(master=self, values=self.voiceOptions, command=self.voice_callback)
         self.dropOpt.grid(row=0, column=0, padx=10, pady=10)
 
         self.playBtn = ctk.CTkButton(master=self, text="Play", command=self.playVideo)
@@ -276,7 +259,7 @@ class Reader(ctk.CTk):
         summarized = summarize_generate_audio.Summarizer.summarize_text(content.read())
         self.textArea.insert(ctk.END, summarized)
         summarize_generate_audio.Summarizer.generate_video(summarized)
-        self.source = pyglet.media.load('polly_summary_Matthew.mp3', streaming=False)
+        self.source = pyglet.media.load('./polly_summary_Matthew.mp3', streaming=False)
         self.player.queue(self.source)
 
     def playVideo(self):
@@ -295,7 +278,6 @@ class Reader(ctk.CTk):
             self.quiz_window = Quiz(self)
         else:
             self.quiz_window.focus()
-
 
     # def create_quiz(api_key, text):
     #     openai.api_key = api_key
@@ -317,13 +299,13 @@ class Reader(ctk.CTk):
 
         if choice == "Mathew":
             print("combobox dropdown clicked:", choice)
-            media = pyglet.media.load("polly_summary_Matthew.mp3")
+            media = pyglet.media.load("./polly_summary_Matthew.mp3")
             self.player.queue(media)
         elif choice == "Joanna":
-            media = pyglet.media.load("polly_summary_Joanna.mp3")
+            media = pyglet.media.load("./polly_summary_Joanna.mp3")
             self.player.queue(media)
         elif choice == "Amy":
-            media = pyglet.media.load("polly_summary_Amy.mp3")
+            media = pyglet.media.load("./polly_summary_Amy.mp3")
             self.player.queue(media)
         self.isPlay = False
 
@@ -350,16 +332,68 @@ class Reader(ctk.CTk):
         self.txtFrame.textBx.configure(border_color="#FFFFFF", border_width=0)
 
     def openImages(self):
+        if (self.imgFlag):
+            output_folder = './extracted_images'
+            self.pdf_to_images(pdfFile, output_folder)
+
+            # List all image files in the folder
+            image_files = [f for f in os.listdir(output_folder) if f.endswith(('.jpg', '.jpeg', '.png', '.bmp'))]
+            # Loop through the images and clip each one
+            for image_file in image_files:
+                image_path = os.path.join(output_folder, image_file)
+                image = cv2.imread(image_path)
+
+                if image is not None:
+                    self.clip_images(image)
+                    print(f"Image '{image_file}' clipped.")
+                else:
+                    print(f"Error loading image '{image_file}'.")
+            self.imgFlag = False
+    
         if self.images_window is None or not self.images_window.winfo_exists():
             self.images_window = Images(self)
         else:
             self.images_window.focus()
-    
+
+    def pdf_to_images(self, pdf_path, output_folder):
+        # Convert PDF to list of images
+        images = convert_from_path(pdf_path)
+        for i, image in enumerate(images):
+            image.save(f'{output_folder}/output_{i}.png', 'PNG')
+
     def openVid(self):
         if self.video_window is None or not self.video_window.winfo_exists():
             self.video_window = Arcfield(self)
         else:
             self.video_window.focus()
+
+    def clip_images(self, image):
+        # Convert the image to grayscale
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # Apply binary thresholding
+        _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY_INV)
+        # Find contours
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # Directory to save the extracted images
+        save_dir = 'extracted_images'
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        padding = 200  # Adjust this value as needed
+
+        for idx, contour in enumerate(contours):
+            if cv2.contourArea(contour) > 5000:
+                x, y, w, h = cv2.boundingRect(contour)
+
+                # Add padding
+                x = max(0, x - padding)
+                y = max(0, y - padding)
+                w = min(image.shape[1] - x, w + 2 * padding)
+                h = min(image.shape[0] - y, h + 2 * padding)
+
+                cropped_image = image[y:y + h, x:x + w]
+                save_path = os.path.join(save_dir, f'extracted_{idx}.jpg')
+                cv2.imwrite(save_path, cropped_image)
 
 # FINISH
     def optOnHover(self, event):
@@ -393,10 +427,11 @@ class Images(ctk.CTkToplevel):
         self.images = os.listdir("./extracted_images")
         print(self.images)
         for i,img in enumerate(self.images):
-            self.imgFrame.grid_rowconfigure(i, weight=0)
-            self.im = tkinter.PhotoImage(master=self.imgFrame,file="./extracted_images/"+str(img))
-            self.imLbl = ctk.CTkLabel(self.imgFrame, image=self.im, text="")
-            self.imLbl.grid(row=i, column=0, padx=20, pady=20, sticky="nsew")
+            if('.png' not in str(img)):
+                self.imgFrame.grid_rowconfigure(i, weight=0)
+                self.im = ImageTk.PhotoImage(Image.open("./extracted_images/"+str(img)))
+                self.imLbl = ctk.CTkLabel(self.imgFrame, image=self.im, text="")
+                self.imLbl.grid(row=i, column=0, padx=20, pady=20, sticky="nsew")
         self.imgFrame.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
 
 class Quiz(ctk.CTkToplevel):
